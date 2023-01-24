@@ -9,7 +9,6 @@ class MOTOR:
         self.frequency = c.frequency
         self.amplitude = c.amplitude
         self.offset = c.phaseOffset
-        self.Prepare_To_Act()
         pass
 
     def Set_Value(self, robotId, desiredAngle):
