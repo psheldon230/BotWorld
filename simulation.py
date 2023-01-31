@@ -8,8 +8,9 @@ import constants as c
 import time
 
 class SIMULATION:
-    def __init__(self, directOrGUI):
+    def __init__(self, directOrGUI, solutionID):
         self.directOrGUI = directOrGUI
+        self.solutionID = solutionID
         if self.directOrGUI == "DIRECT":
             self.physicsClient = p.connect(p.DIRECT)
         else:
@@ -17,7 +18,7 @@ class SIMULATION:
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.world = WORLD()
         p.setGravity(0,0,-9.8)
-        self.robot = ROBOT()
+        self.robot = ROBOT(self.solutionID)
         pass
 
     def Run(self):

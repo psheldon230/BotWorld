@@ -1,11 +1,11 @@
 import os
-import hillclimber
+import parallelHillClimber
 # counter = 0
 # while counter < 5:
 #     os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/generate.py'")
 #     os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py'")
 #     counter = counter + 1
 
-hc = hillclimber.hillclimber()
-hc.Evolve()
-hc.Show_Best()
+phc = parallelHillClimber.PARALLEL_HILL_CLIMBER()
+phc.Evolve()
+phc.Show_Best()

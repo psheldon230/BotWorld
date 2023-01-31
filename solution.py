@@ -2,25 +2,42 @@ import numpy
 import pyrosim.pyrosim as pyrosim
 import os
 import random
+import time
 
 class Solution:
 
 
-    def __init__(self):
+    def __init__(self, nextAvailableID):
+        self.myID = nextAvailableID
         self.weights = numpy.random.rand(3, 2)
         self.weights = self.weights * 2 - 1
+
     
     def Evaluate(self, directOrGUI):
     
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI)
-        fitness = open("fitness.txt", "r")
+        os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " &")
+        print("ID num is :" + str(self.myID))
+        while not os.path.exists('fitness'+str(self.myID)+ '.txt'):
+            time.sleep(0.08)
+        fitness = open("fitness"+str(self.myID) + ".txt", "r")
         self.fitness = float(fitness.read())
         fitness.close()
         
-
+    def Start_Simulation(self, directOrGUI):
+        self.Create_World()
+        self.Create_Body()
+        self.Create_Brain()
+        os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " &")
+    def Wait_For_Simulation_To_End(self):
+        while not os.path.exists('/Users/peter/Desktop/CS 396/BotWorld/fitness'+str(self.myID)+ '.txt'):
+            time.sleep(0.09)
+        fitness = open("fitness"+str(self.myID) + ".txt", "r")
+        self.fitness = float(fitness.read())
+        fitness.close()
+        os.system("rm fitness" +str(self.myID)+ ".txt")
     
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
@@ -40,7 +57,7 @@ class Solution:
         pass
 
     def Create_Brain(self):
-        pyrosim.Start_NeuralNetwork("brain.nndf")
+        pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
         pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
         pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLeg")
         pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "FrontLeg")
@@ -61,6 +78,10 @@ class Solution:
         randomRow = random.randint(0,2)
         randomColumn = random.randint(0, 1)
         self.weights[randomRow][randomColumn] = random.random() * 2 - 1
+
+    def Set_ID(self, ID):
+        self.myID = ID
+
 
 
         
