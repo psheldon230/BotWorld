@@ -8,8 +8,12 @@ import constants as c
 import time
 
 class SIMULATION:
-    def __init__(self):
-        self.physicsClient = p.connect(p.GUI)
+    def __init__(self, directOrGUI):
+        self.directOrGUI = directOrGUI
+        if self.directOrGUI == "DIRECT":
+            self.physicsClient = p.connect(p.DIRECT)
+        else:
+            self.physicsClient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.world = WORLD()
         p.setGravity(0,0,-9.8)
@@ -18,7 +22,8 @@ class SIMULATION:
 
     def Run(self):
         for x in range(c.iterations):
-            time.sleep(c.sleepTime)
+            if self.directOrGUI == "GUI":
+             time.sleep(c.sleepTime)
             p.stepSimulation()
             self.robot.Sense(x)
             self.robot.Think()
@@ -26,6 +31,8 @@ class SIMULATION:
         #numpy.save('data/outputBack.npy', backLegSensorValues)
         #numpy.save('data/outputFront.npy', frontLegSensorValues)
         pass
+    def Get_Fitness(self):
+       self.robot.Get_Fitness()
 
     def __del__(self):
         p.disconnect()
