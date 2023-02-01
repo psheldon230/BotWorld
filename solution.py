@@ -21,7 +21,7 @@ class Solution:
         os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " &")
         print("ID num is :" + str(self.myID))
         while not os.path.exists('fitness'+str(self.myID)+ '.txt'):
-            time.sleep(0.08)
+            time.sleep(0.1)
         fitness = open("fitness"+str(self.myID) + ".txt", "r")
         self.fitness = float(fitness.read())
         fitness.close()
@@ -30,10 +30,10 @@ class Solution:
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " &")
+        os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists('/Users/peter/Desktop/CS 396/BotWorld/fitness'+str(self.myID)+ '.txt'):
-            time.sleep(0.09)
+            time.sleep(0.2)
         fitness = open("fitness"+str(self.myID) + ".txt", "r")
         self.fitness = float(fitness.read())
         fitness.close()
