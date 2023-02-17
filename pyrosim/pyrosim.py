@@ -106,33 +106,33 @@ def Prepare_To_Simulate(bodyID):
 
     Prepare_Joint_Dictionary(bodyID)
 
-def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1]):
+def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1], colorCode='"0 1.0 1.0 1.0"', colorName='"Cyan"'):
 
-    global availableLinkIndex
+     global availableLinkIndex
 
-    global links
+     global links
 
-    if filetype == SDF_FILETYPE:
+     if filetype == SDF_FILETYPE:
 
         Start_Model(name,pos)
 
         link = LINK_SDF(name,pos,size)
 
         links.append(link)
-    else:
-        link = LINK_URDF(name,pos,size)
+     else:
+        link = LINK_URDF(name,pos,size, colorCode, colorName)
 
         links.append(link)
 
-    link.Save(f)
+     link.Save(f)
 
-    if filetype == SDF_FILETYPE:
+     if filetype == SDF_FILETYPE:
 
         End_Model()
 
-    linkNamesToIndices[name] = availableLinkIndex
+     linkNamesToIndices[name] = availableLinkIndex
 
-    availableLinkIndex = availableLinkIndex + 1
+     availableLinkIndex = availableLinkIndex + 1
 
 def Send_Joint(name,parent,child,type,position, jointAxis):
 

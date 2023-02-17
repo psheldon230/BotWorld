@@ -10,8 +10,9 @@ class Solution:
 
     def __init__(self, nextAvailableID):
         self.myID = nextAvailableID
-        self.weights = numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)
-        self.weights = self.weights * 2 - 1
+        self.senseBlock = []
+        self.numBlocks = random.randint(3, 15)
+        
 
     
     def Evaluate(self, directOrGUI):
@@ -42,34 +43,65 @@ class Solution:
     
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
-        pyrosim.Send_Cube(name="Box", pos=[3,0, 0.5] , size=[1,10,1])
         pyrosim.End()
         pass
 
 
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
-        pyrosim.Send_Cube(name="Torso", pos=[0,0,1] , size=[1,1,1])
-        pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [-0.5,0,1], jointAxis= "1 0 0")
-        pyrosim.Send_Cube(name="BackLeg", pos=[-0.5, 0 ,0] , size=[1,.2 ,0.2])
-        pyrosim.Send_Joint( name = "BackLeg_BackLowerLeg" , parent= "BackLeg" , child = "BackLowerLeg" , type = "revolute", position = [-1, 0,0], jointAxis = "0 1 0")
-        pyrosim.Send_Cube(name="BackLowerLeg", pos=[0,0, 0] , size=[0.2,0.2,1])
+        randomNumbers = numpy.random.rand(3,1) + 0.5
+
+        if "Block0" in self.senseBlock:
+            color = "Green"
+        else:
+            color = "Blue"
         
+        pyrosim.Send_Cube(name="Block0", pos=[0,0,3] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"' + color + '"')
+        pyrosim.Send_Joint(name = "Block0_Block1" , parent= "Block0" , child = "Block1", type = "revolute", position = [randomNumbers[0][0] / 2,0,2],jointAxis = "0 1 0")
+        print(self.senseBlock)
+        for currBlock in range(1, self.numBlocks):
+            randomNumbers = numpy.random.rand(3,1) + 0.5
+            if self.senseBlock.__contains__("Block" + str(currBlock)):
+                pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0] / 2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
+            else:
+                pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0] / 2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
+            if currBlock < self.numBlocks - 1:
+                pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [randomNumbers[0][0],0,0],jointAxis = "0 1 0")
         pyrosim.End()
-        pass
+
+
+        # pyrosim.Send_Cube(name="Torso", pos=[0,0,1] , size=[1,1,1])
+        # pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [-0.5,0,1], jointAxis= "1 0 0")
+        # pyrosim.Send_Cube(name="BackLeg", pos=[-0.5, 0 ,0] , size=[1,.2 ,0.2])
+        # pyrosim.Send_Joint( name = "BackLeg_BackLowerLeg" , parent= "BackLeg" , child = "BackLowerLeg" , type = "revolute", position = [-1, 0,0], jointAxis = "0 1 0")
+        # pyrosim.Send_Cube(name="BackLowerLeg", pos=[0,0, 0] , size=[0.2,0.2,1])
+        
+        # pyrosim.End()
+        # pass
 
     def Create_Brain(self):
-        pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
-        pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "BackLeg")
-        pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLowerLeg")
-        pyrosim.Send_Motor_Neuron( name = 2 , jointName = "Torso_BackLeg")
-        pyrosim.Send_Motor_Neuron( name = 3 , jointName = "BackLeg_BackLowerLeg")
-        for currentRow in range(0, c.numSensorNeurons):
-            for currentColumn in range(0, c.numMotorNeurons):
-                pyrosim.Send_Synapse( sourceNeuronName = currentRow , targetNeuronName = currentColumn + c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
+         pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
+         motorCount = 0
+         for currBlock in range(self.numBlocks-1):
+            motorCount += 1
+            pyrosim.Send_Motor_Neuron(name= currBlock, jointName="Block" + str(currBlock)+ "_Block" + str(currBlock + 1))
+         sensorCount = 0
+        
+         for currBlock in range(self.numBlocks):
+            sensorTest = random.randint(0, 1)
+            if sensorTest == 0:
+                sensorCount += 1
+                pyrosim.Send_Sensor_Neuron(name=sensorCount + motorCount, linkName= "Block" + str(currBlock))
+                self.senseBlock.append("Block" + str(currBlock))
 
-        #pyrosim.Send_Synapse( sourceNeuronName = 2 , targetNeuronName = 4 , weight = 10.0 )
-        pyrosim.End()
+         self.weights = numpy.random.rand(sensorCount, motorCount) * 2 - 1
+
+         for currentRow in range(sensorCount):
+             for currentColumn in range(self.numBlocks - 1):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow + self.numBlocks, targetNeuronName = currentColumn, weight = self.weights[currentRow][currentColumn])
+
+         pyrosim.End()
+
     def Mutate(self):
         randomRow = random.randint(0,c.numSensorNeurons-1)
         randomColumn = random.randint(0, c.numMotorNeurons-1)

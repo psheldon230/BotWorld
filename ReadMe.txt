@@ -1,6 +1,7 @@
--This codebase generates a two jointed creature with a tail and body, 
-  that is evolved to push a block as far as it can.
-
--Simply open main.py, and click run to evolve a creature! Enjoy!
+-This codebase generates a snake creature with a random amount of links and sensor neurons
+-The blue links have no sensor neurons, while the green do
+  
+To Run:
+-Simply open main.py, and click run to spawn a creature! Enjoy!
 
 
