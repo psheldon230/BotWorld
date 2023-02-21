@@ -11,7 +11,8 @@ class Solution:
     def __init__(self, nextAvailableID):
         self.myID = nextAvailableID
         self.senseBlock = []
-        self.numBlocks = random.randint(3, 15)
+        self.numBlocks = random.randint(5, 15)
+        self.positions = [(0, 0, 0)]
         
 
     
@@ -48,7 +49,9 @@ class Solution:
 
 
     def Create_Body(self):
+
         pyrosim.Start_URDF("body.urdf")
+
         randomNumbers = numpy.random.rand(3,1) + 0.5
 
         if "Block0" in self.senseBlock:
@@ -61,12 +64,49 @@ class Solution:
         print(self.senseBlock)
         for currBlock in range(1, self.numBlocks):
             randomNumbers = numpy.random.rand(3,1) + 0.5
-            if self.senseBlock.__contains__("Block" + str(currBlock)):
-                pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0] / 2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
-            else:
-                pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0] / 2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
-            if currBlock < self.numBlocks - 1:
-                pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [randomNumbers[0][0],0,0],jointAxis = "0 1 0")
+            caseDir = random.randint(1, 4)
+            oldJoint = [randomNumbers[0][0] / 2,0,2]
+            if caseDir == 1: 
+                if self.senseBlock.__contains__("Block" + str(currBlock)):
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0]/2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
+                else:
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[randomNumbers[0][0]/2,0,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
+                #make joint if not last
+                  #make joint if not last
+                if currBlock < self.numBlocks - 1:
+                    pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [randomNumbers[0][0],0,0],jointAxis = "0 1 0")
+            elif caseDir == 2:
+                 if self.senseBlock.__contains__("Block" + str(currBlock)):
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0,randomNumbers[0][0] /2,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
+                 else:
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0,randomNumbers[0][0] /2 ,0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
+                #make joint if not last
+                  #make joint if not last
+                 if currBlock < self.numBlocks - 1:
+                    pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [0,randomNumbers[0][0],0],jointAxis = "0 1 0")
+            elif caseDir == 3:
+                 if self.senseBlock.__contains__("Block" + str(currBlock)):
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0, 0, randomNumbers[0][0] /2] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
+                 else:
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0, 0,randomNumbers[0][0] / 2] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
+                #make joint if not last
+                  #make joint if not last
+                 if currBlock < self.numBlocks - 1:
+                    pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [ 0,0,randomNumbers[0][0]],jointAxis = "0 0 1")
+            elif caseDir == 4:
+                 if self.senseBlock.__contains__("Block" + str(currBlock)):
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0, -randomNumbers[0][0] /2, 0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 1.0 0 1.0"', colorName='"Green"')
+                 else:
+                    pyrosim.Send_Cube(name="Block" + str(currBlock), pos=[0, -randomNumbers[0][0] /2, 0] , size=[randomNumbers[0][0],randomNumbers[1][0],randomNumbers[2][0]], colorCode='"0 0 1.0 1.0"', colorName='"Blue"')
+                #make joint if not last
+                  #make joint if not last
+                 if currBlock < self.numBlocks - 1:
+                    pyrosim.Send_Joint( name = "Block" + str(currBlock) + "_Block" + str(currBlock + 1) , parent= "Block" + str(currBlock) , child = "Block" + str(currBlock+ 1) , type = "revolute", position = [ 0,-randomNumbers[0][0], 0],jointAxis = "0 0 1")
+
+
+
+
+
         pyrosim.End()
 
 
