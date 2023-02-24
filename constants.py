@@ -9,5 +9,5 @@ populationSize = 1
 numSensorNeurons = 2
 numMotorNeurons = 2
 motorJointRange = 0.2
-numBlocks = 100
-blockSize = .1
+numBlocks = 20
+blockSize = .5
