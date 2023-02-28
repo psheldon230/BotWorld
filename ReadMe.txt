@@ -8,5 +8,8 @@ How to operate:
 Diagram:
 https://imgur.com/a/QZrrsm5
 
+Credit:
+ -Credit to r/ludobots for making this codebase possible!
+
 
 
