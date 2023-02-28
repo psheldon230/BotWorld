@@ -1,12 +1,12 @@
--This codebase generates a random 3D creature, by running the "main.py" file.
--The creature can be anywhere from 5 to 15 blocks in length
--Blocks can generate in any direction, allowing for the creature's 3D shape.
-    -To accomplish this, a random number is generated, from that value a direction is picked
-    -Then, the blocks coordinates are set according to its respective direction, and the joint is connected to the next block
--The brain is created to assign a motor neuron to every block, and send sensor neurons to a random number of blocks in the creature
--Blocks with sensor neurons are tagged green, while blocks without are tagged blue.
-Diagram Image URL:
-https://imgur.com/a/vmCFQ0B
+Description:
+    -This codebase generates any specificed number of random 3D creatures that contain eight 1 x 1 x 1 blocks
+    -These creatures are then simulated, and evolved to mutate in both phenotype and genotype
+    -The creatures that move farthest in the positive x direction are selected to evolve their children in the next generation
+    -The overall fittest creature from any generation is then simulated in pyrosim, and revealed to the user.
+How to operate:
+    -Simply open main.py, and click run to activate the evolutionary simulation. The rest of the code will work its magic!
+Diagram:
+https://imgur.com/a/QZrrsm5
 
 
 

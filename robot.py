@@ -12,7 +12,7 @@ class ROBOT:
         self.solutionID = solutionID
         self.motor = dict()
         self.sensors = dict()
-        self.robotId = p.loadURDF("body.urdf", [0, 0, 0.1])
+        self.robotId = p.loadURDF("body" +str(self.solutionID) + ".urdf", [0, 0, 0.1])
 
         self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
         os.system("rm brain" + str(self.solutionID) + ".nndf")
@@ -51,7 +51,7 @@ class ROBOT:
         print("fitness")
         basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId) 
         basePosition = basePositionAndOrientation[0]
-        yPosition = basePosition[0]
+        xPosition = basePosition[0]
         fitness = open("tmp" + str(self.solutionID)+ ".txt", "w")
-        fitness.write(str(yPosition))
+        fitness.write(str(xPosition))
         os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")

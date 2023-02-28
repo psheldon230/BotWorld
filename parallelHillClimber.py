@@ -2,6 +2,8 @@ import solution
 import copy
 import constants as c
 import os
+import time
+import matplotlib.pyplot as plt
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
@@ -12,7 +14,9 @@ class PARALLEL_HILL_CLIMBER:
         for i in range(0, c.populationSize):
             self.parents[i] = solution.Solution(self.nextAvailableID)
             self.nextAvailableID = self.nextAvailableID + 1
-
+        self.evolutionList = []
+        for i in range(len(self.parents)):
+            self.evolutionList.append([])
     def Evolve(self):
         # self.parent.Evaluate("GUI")
         self.Evaluate(self.parents)
@@ -40,17 +44,32 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.parents.keys():
             if self.parents[i].fitness < self.children[i].fitness:
                 self.parents[i] = self.children[i]
+            self.evolutionList[i].append(self.parents[i].fitness)
     def Print(self):
         for i in self.parents.keys():
             print("Parent Fitness:" + str(self.parents[i].fitness) + " Child Fitness:" + str(self.children[i].fitness))
             print(" ")
     def Show_Best(self):
-        max = 0
+        max= 0
         for i in self.parents.keys():
             if self.parents[i].fitness > self.parents[max].fitness:
                 max = i
         print(self.parents[max].fitness)
+        for i in range(len(self.evolutionList)):
+            plt.plot(self.evolutionList[i], label="Robot {}".format(i))
+
+        # Setting the title and axis labels
+        plt.title('Evolutionary Fitness vs Generations')
+        plt.xlabel('Generation')
+        plt.ylabel('Fitness')
+        plt.legend()
+
+        # Displaying the plot
+        plt.show()
         self.parents[max].Start_Simulation("GUI")
+    def Show_First(self):
+        self.parents[0].Start_Simulation("GUI")
+        time.sleep(3)
 
     def Evaluate(self, solutions):
         for i in range(0, len(solutions.keys())):

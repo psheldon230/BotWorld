@@ -12,6 +12,8 @@ class prel:
         self.blockList.append(["Block0", [0, 0, 1], -1])
         self.generateCreature()
         self.convertToRelative()
+        self.printBlockList()
+
         
     def generateCreature(self):
         for i in range(0, self.numBlocks):
@@ -48,15 +50,11 @@ class prel:
     def getJointCoords(self, newCoords):
           split = newCoords[0].split("_")
           firstParent = split[0][5:]
-          print(firstParent)
           oldParent = ["", [0, 0, 0], 0]
           for block in self.blockList:
             if block[0] != "Block0":
                 if "Block" + firstParent == block[0]:
-                    print("hi hi")
-                    print(int(block[2]))
                     oldParent = self.blockList[int(block[2])]
-                    print(oldParent)
           parentName = "Block" + str(oldParent[0][5:]) + "_" + "Block" + str(firstParent)
           parentJoint = ["", [0, 0, 0], 0]
           for joint in self.jointList:
@@ -68,7 +66,7 @@ class prel:
 
     def getBlockCoords(self, blockCoord):
         parentName = "Block" + str(blockCoord[2]) + "_" + "Block" + str(blockCoord[0][5:])
-        dir = None
+        dir = -1
         for joint in self.jointList:
             if joint[0] == parentName:
                 dir = joint[2]
