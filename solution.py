@@ -10,11 +10,11 @@ class Solution:
 
 
     def __init__(self, nextAvailableID):
+        self.map = prel()
         self.myID = nextAvailableID
         self.senseBlock = []
         self.numBlocks = c.numBlocks
         self.positions = [(0, 0, 0)]
-        self.map = prel()
         self.blockList = self.map.getBlocks()
         self.jointList = self.map.getJoints()
         self.numMotorNeurons =  len(self.blockList)
@@ -31,7 +31,7 @@ class Solution:
         os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " &")
         print("ID num is :" + str(self.myID))
         while not os.path.exists('fitness'+str(self.myID)+ '.txt'):
-            time.sleep(0.1)
+            time.sleep(0.01)
         fitness = open("fitness"+str(self.myID) + ".txt", "r")
         self.fitness = float(fitness.read())
         fitness.close()
@@ -41,13 +41,21 @@ class Solution:
         self.Create_Body()
         self.Create_Brain()
         os.system("python3 '/Users/peter/Desktop/CS 396/BotWorld/BotWorld/simulate.py' " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
-        time.sleep(1)
     def Wait_For_Simulation_To_End(self):
+        found = True
         while not os.path.exists('/Users/peter/Desktop/CS 396/BotWorld/fitness'+str(self.myID)+ '.txt'):
-            time.sleep(1)
-        fitness = open("fitness"+str(self.myID) + ".txt", "r")
-        self.fitness = float(fitness.read())
-        fitness.close()
+            time.sleep(0.01)
+        while found:    
+            try:
+                fitness = open("fitness"+str(self.myID) + ".txt", "r")
+                self.fitness = float(fitness.read())
+                fitness.close()
+                found = False
+            except:
+                time.sleep(.01)
+                found = True
+
+
         os.system("rm fitness" +str(self.myID)+ ".txt")
     
     def Create_World(self):
@@ -79,10 +87,9 @@ class Solution:
 
 
     def Create_Brain(self):
-         self.senseBlock.clear()
+         #self.senseBlock.clear()
          jointList = self.map.getJoints()
          blockList = self.map.getBlocks()
-         time.sleep(2)
          pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
          motorCount = 0
          for i in range(0, len(jointList)):
@@ -92,20 +99,27 @@ class Solution:
         
          for block in blockList:
              sensorTest = random.randint(0, 1)
-             if sensorTest == 0:
+             if self.firstTime and sensorTest == 0:
                  sensorCount += 1
                  self.numSensorNeurons += 1
                  pyrosim.Send_Sensor_Neuron(name=sensorCount + motorCount, linkName= block[0])
                  self.senseBlock.append(block[0])
-         if self.firstTime:
+             else:
+                 currBlock = block
+                 if currBlock[0] in self.senseBlock:
+                    sensorCount += 1
+                    pyrosim.Send_Sensor_Neuron(name=sensorCount + motorCount, linkName= block[0])
+                    
 
-            self.weights = numpy.random.rand(20, 20) * 2 - 1
+                 
+
+         if self.firstTime:
+            self.weights = numpy.random.rand(50, 50) * 2 - 1
             self.firstTime = False
 
          for currentRow in range(sensorCount):
             for currentColumn in range(len(blockList) - 1):
                 pyrosim.Send_Synapse(sourceNeuronName = currentRow + self.numBlocks, targetNeuronName = currentColumn, weight = self.weights[currentRow][currentColumn])
-
          pyrosim.End()
 
     def Mutate(self):
@@ -130,7 +144,6 @@ class Solution:
             for joints in self.jointList:
                 if joints[0].__contains__("_" + self.blockList[block][0]):
                     self.jointList.remove(joints)
-            print("mutating now")
             self.numBlocks -= 1
             if self.blockList[block][0] in self.senseBlock:
                 self.numSensorNeurons -= 1

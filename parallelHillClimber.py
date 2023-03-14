@@ -9,6 +9,8 @@ class PARALLEL_HILL_CLIMBER:
     def __init__(self):
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
+        os.system("rm body*.urdf")
+
         self.nextAvailableID = 0
         self.parents = {}
         for i in range(0, c.populationSize):
@@ -48,25 +50,24 @@ class PARALLEL_HILL_CLIMBER:
     def Print(self):
         for i in self.parents.keys():
             print("Parent Fitness:" + str(self.parents[i].fitness) + " Child Fitness:" + str(self.children[i].fitness))
-            print(" ")
+            print("")
     def Show_Best(self):
         max= 0
         for i in self.parents.keys():
             if self.parents[i].fitness > self.parents[max].fitness:
                 max = i
+        print("")
+        print("Best Fitness:")
         print(self.parents[max].fitness)
-        for i in range(len(self.evolutionList)):
-            plt.plot(self.evolutionList[i], label="Robot {}".format(i))
-
-        # Setting the title and axis labels
-        plt.title('Evolutionary Fitness vs Generations')
-        plt.xlabel('Generation')
-        plt.ylabel('Fitness')
-        plt.legend()
-
-        # Displaying the plot
-        plt.show()
+        print("")
         self.parents[max].Start_Simulation("GUI")
+    def Show_Seed(self):
+        max= 0
+        for i in self.parents.keys():
+            if self.parents[i].fitness > self.parents[max].fitness:
+                max = i
+        print(self.parents[max].fitness)
+        return [self.parents[max].fitness, self.evolutionList[max]]
     def Show_First(self):
         self.parents[0].Start_Simulation("GUI")
         time.sleep(3)
