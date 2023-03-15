@@ -10,7 +10,7 @@ Enjoy!
 [![video](https://img.youtube.com/vi/NQgds0gcGyQ/0.jpg)](https://www.youtube.com/watch?v=NQgds0gcGyQ)
 
 2. Teaser Gif:
-
+![TeaserGif](media/TeaserGif.gif)
 3. Methods:
 -This project successfully simulates evolution in a virtual environment
 -Specifically, 50 parents are generated and evolved for 500 generations. This simulation is done 10 times for a total of 50,000 creatures
@@ -28,9 +28,9 @@ Enjoy!
     ![selectionDiagram](media/selection.jpg)
 
 4. Results
--Ovearll, my project was successful at generating 50,000 creatures in 10 seeds, with each consisting of
-10 parents and 500 generations of evolution.
--The max fitness value was xxxx which was achieved by the xxx seed.
+-Overall, my project was successful at generating 50,000 creatures in 10 seeds, with each consisting of 10 parents and 500 generations of evolution.
+-This took over 5 hours to run on my computer, but the results were well worth it!
+-The max fitness value was 7.36 which was achieved by the 2nd seed.
 ![resultsDiagram](media/results.png)
 
 -6 links seemed to be the optimal number of blocks per creature.
