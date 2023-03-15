@@ -19,11 +19,12 @@ Enjoy!
 [![video](https://img.youtube.com/vi/F_n-Ddp4yso/0.jpg)](https://www.youtube.com/watch?v=F_n-Ddp4yso)
 
 4. Methods:
+
 -This project successfully simulates evolution in a virtual environment
 -Specifically, 50 parents are generated and evolved for 500 generations. This simulation is done 10 times for a total of 50,000 creatures
 -50,000 3D creatures made of 1x1x1 blocks are generated, mutated, and selected using the Paralel Hill Climber class
 -To reproduce my final evolved creature, simply run the 'reRunBest.py'
--To evolve a new creature, run 'main.py'
+-To evolve a new creature, run 'main.py', then 'reRun.py' to view your new creature!
 
     *How Body/Brains are Randomly Generated:
     ![generationDiagram](media/generation.jpg)
@@ -35,6 +36,7 @@ Enjoy!
     ![selectionDiagram](media/selection.jpg)
 
 5. Results
+
 -Overall, my project was successful at generating 50,000 creatures in 10 seeds, with each consisting of 10 parents and 500 generations of evolution.
 -This took over 5 hours to run on my computer, but the results were well worth it!
 -The max fitness value was 7.36 which was achieved by the 2nd seed.
@@ -49,6 +51,7 @@ Enjoy!
     -I was unable to let creatures randomly gain another block, as this caused numerous bugs and errors in my codebase.
 
 6. Credits
+
 -I would like to credit CS 396: Artifical Life at Northwestern for help developing this project.
 -Additionally, thanks to r/ludobots for help starting my project!
  
