@@ -6,7 +6,7 @@ and I am very proud of my work. I have taken the Engineer Route for my project.
 
 1. Summary Video:
 Enjoy!
-![video](media/CS396_Video.mp4)
+![video](https://youtu.be/RE3QdtuYkro)
 
 2. Teaser Gif:
 
