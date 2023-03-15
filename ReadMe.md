@@ -25,7 +25,6 @@ Enjoy!
 -50,000 3D creatures made of 1x1x1 blocks are generated, mutated, and selected using the Paralel Hill Climber class
 -To reproduce my final evolved creature, simply run the 'reRunBest.py'
 -To evolve a new creature, run 'main.py', then 'reRun.py' to view your new creature!
--I have embedded the images, but it seems to be buggy on github for some reason, links are below if the embedded images do not work!
 
     *How Body/Brains are Randomly Generated:
    ![genImg](media/generation.png)
