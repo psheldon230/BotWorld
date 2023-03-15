@@ -11,4 +11,4 @@ numMotorNeurons = 2
 motorJointRange = 0.2
 numBlocks = 8
 blockSize = 1
-numRuns = 8
+numRuns = 10
