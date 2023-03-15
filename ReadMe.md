@@ -27,7 +27,7 @@ Enjoy!
 -To evolve a new creature, run 'main.py', then 'reRun.py' to view your new creature!
 
     *How Body/Brains are Randomly Generated:
-    ![genImg](https://i.imgur.com/oy59l26.jpg)
+    [![genImg](https://i.imgur.com/oy59l26.jpg)]
 
     *How Body/Brains are Mutated:
     ![mutateImg](media/mutation.png)
