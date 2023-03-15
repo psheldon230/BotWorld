@@ -31,6 +31,7 @@ Enjoy!
 
     *How Body/Brains are Mutated:
     ![mutateImg](BotWorld/media/mutation.png)
+    ![mutateImg](media/mutation.png)
 
     *How Selection Works:
     ![selecImg](BotWorld/media/selection.png)
