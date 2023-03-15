@@ -30,10 +30,10 @@ Enjoy!
     [![genImg](https://i.imgur.com/oy59l26.jpg)](https://imgur.com/oy59l26)
 
     *How Body/Brains are Mutated:
-    ![mutateImg](media/mutation.png)
+    ![mutateImg](BotWorld/media/mutation.png)
 
     *How Selection Works:
-    ![selecImg](media/selection.png)
+    ![selecImg](BotWorld/media/selection.png)
 
 5. Results
 
