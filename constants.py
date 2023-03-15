@@ -1,5 +1,5 @@
 sleepTime = 1/1000
-iterations = 800
+iterations = 1000
 frequency = 10
 maxForce = 150
 phaseOffset = 3.14159/2
@@ -11,4 +11,4 @@ numMotorNeurons = 2
 motorJointRange = 0.2
 numBlocks = 8
 blockSize = 1
-numRuns = 10
+numRuns = 8

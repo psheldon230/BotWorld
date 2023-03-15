@@ -37,5 +37,3 @@ phcs[maxi].Show_Best()
 
 with open("workingPhcs.pkl", "rb") as g:
     phcsW = pickle.load(g)
-
-print(phcsW)

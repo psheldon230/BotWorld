@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import pickle
 import signal
 #simply click run to evolve a creature!
+with open("workingPhcs.pkl", "rb") as g:
+    phcsW = pickle.load(g)
 phcs = []
 maxes = []
 def find_max(maxes):
@@ -67,19 +69,15 @@ for i in range(c.numRuns):
         firstTime = False
     phc.Evolve()
     phcs.append(phc)
-    with open("workingPhcs.pkl", "wb") as f:
-        pickle.dump(phcs, f)
-        f.close()
-
 for i in range(len(phcs)):
     maxes.append(phcs[i].Show_Seed())
 
 maxi = find_max(maxes)
 phcs[maxi].Show_Best()
-with open("phcs.pkl", "wb") as f:
+with open("bphcs.pkl", "wb") as f:
      pickle.dump(phcs, f)
      f.close()
-with open("maxes.pkl", "wb") as g:
+with open("bmaxes.pkl", "wb") as g:
     pickle.dump(maxes, g)
 create_graph(maxes, phcs)
 
