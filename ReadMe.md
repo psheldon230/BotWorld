@@ -10,7 +10,7 @@ Enjoy!
 [![video](https://img.youtube.com/vi/NQgds0gcGyQ/0.jpg)](https://www.youtube.com/watch?v=NQgds0gcGyQ)
 
 2. Teaser Gif:
-![TeaserGif](https://i.imgur.com/TGH9Sfn.gif)
+![TeaserGif](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDJmMmU2YTc1MzZiNGMzYzJjMGZmZTdhOTIwZWM0ZjFmNGYyYjgxOSZjdD1n/kujMH5bH7rrjrzEtcf/giphy.gif)
 3. Methods:
 -This project successfully simulates evolution in a virtual environment
 -Specifically, 50 parents are generated and evolved for 500 generations. This simulation is done 10 times for a total of 50,000 creatures
